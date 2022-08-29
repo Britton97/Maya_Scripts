@@ -1,0 +1,22 @@
+//Britton Whitaker
+polyCube -name home -subdivisionsX 1 -subdivisionsY 1 -subdivisionsZ 1 -width 5 -depth 5 -height 2.5;
+move -relative 0 1.25 0;
+
+polyCube -name r_Roof -subdivisionsX 1 -subdivisionsY 1 -subdivisionsZ 1 -width 6 -depth 5 -height 1 -axis 1 1 0 ;
+move -relative 2 3 0;
+
+polyCube -name l_Roof -subdivisionsX 1 -subdivisionsY 1 -subdivisionsZ 1 -width 6 -depth 5 -height 1 -axis 1 -1 0 ;
+move -relative -1.5 3 0;
+
+polyCube -name door -subdivisionsX 1 -subdivisionsY 1 -subdivisionsZ 1 -width 1 -depth 1 -height 1.5;
+move -relative 1 .75 2.2;
+
+polyCube -name s_window -subdivisionsX 1 -subdivisionsY 1 -subdivisionsZ 1 -width 2 -depth 1 -height 1.5;
+move -relative -1 1 2.2;
+
+polyCylinder -name trunk -subdivisionsX 1 -subdivisionsY 1 -subdivisionsZ 1 -radius .5 -height 2;
+move -relative 5 1 5;
+
+polySphere -name leaf -subdivisionsX 20 -subdivisionsY 20 -radius 1;
+move -relative 5 3 5;
+scale 3 2 3;
