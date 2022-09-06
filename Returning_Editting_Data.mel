@@ -1,0 +1,18 @@
+string $object[]; //Most functions in the documentation will tell you what it returns
+//surrounding this function in the back ticks to save the data
+$object = `polySphere -r 1 -sx 20 -sy 20 -ax 0 1 0 -cuv 2 -ch 1`;
+//print($object);
+
+//Telling it to move the sphere we created. Said $object[0] because of the nodes on the sphere you want to move the first one
+//because it is basically the transform
+move -relative 1, 4, 5 $object[0]
+
+/*
+This is storing float data into radius. You query '-q' which will return the data you want.
+you want to get the radius from $object
+*/
+float $radius = `polySphere -q -radius $object`
+print($radius);
+
+//editting '-e' the radius with a small formula of $object
+polySphere -e -radius ($radius - 2.3); $object;

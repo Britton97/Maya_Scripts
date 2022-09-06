@@ -1,0 +1,20 @@
+int $number;
+$number = 27;
+print($number)
+
+string $name = "Mary";
+$name = "david"
+float $price;
+//boolean
+int $grade;
+float $position[] = {-8.1, -1.8, 9.4};
+$position[0] = 5.9;
+
+/*
+    int 
+    float
+    string
+    bool - 1 (true) or 0 (false)
+    array - can only be the same data type in the array : [1,24,6]
+    vector
+*/

@@ -1,0 +1,15 @@
+/*
+int $num = 13;
+$num++;    // num = 14
+
+13 % 5 = 2
+//five goes into 13 two times and has a remainder of 3
+
+^ is the power operator
+
+== equal to
+// true =  1, false = 0
+
+&& : and
+|| : or
+*/

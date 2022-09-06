@@ -1,0 +1,5 @@
+/*
+Many of the functions in MEl will automatically garbage collect the data if the function "returns" the info
+so you have to put the `` around the function
+*/
+print(`ls -selection`);
