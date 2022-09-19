@@ -1,38 +1,3 @@
-/*
-for ($xPos = -5; $xPos < 6; $xPos++)
-{
-    string $object[]; //Most functions in the documentation will tell you what it returns
-    $object = `polySphere -r 1 -sx 20 -sy 20 -ax 0 1 0 -cuv 2 -ch 1`;
-    move -relative $xPos, 4, 5 $object[0];
-}
-
-polySphere -n test;
-string $thing[];
-$thing = `polySphere -n test`;
-move -r 1, 4, 5 $thing[0];
-*/
-//int $num = rand(0,10);
-//print($num);
-
-//string $body[] = polySphere -r 1 -sx 20 -sy 20 -ax 0 1 0 -cuv 2 -ch 1;
-//polySphere -r 1 -sx 20 -sy 20 -ax 0 1 0 -cuv 2 -ch 1;
-//int $thing = 4;
-//print($thing  + "\r\nhello");
-
-//string $newSphere[] = polySphere -r 1 -sx 20 -sy 20 -ax 0 1 0 -cuv 2 -ch 1;
-//move -r $x 0 $z $newSphere[0];
-
-/*
-float $xPos = 1;
-float $yPos = 2;
-float $zPos = 7;
-
-string $thing[];
-$thing = `polySphere -n test`;
-print($thing);
-move -r $xPos $yPos $zPos "test";
-*/
-
 for( $i=-5; $i<6; ++$i )
 {
     //polySphere -r .5;
