@@ -1,0 +1,16 @@
+proc string NamePicker()
+{
+    string $names[] = {"Hello", "World", "Other", "Thing"};
+    int $size = size($names);
+    int $randNum = `rand $size`;
+    return ($names[$randNum]);
+}
+
+proc int RandomNumber(int $num)
+{
+    int $randNum = `rand $num `;
+    return ($randNum);
+}
+
+string $randName = NamePicker();
+print(NamePicker() + "Favorite number is " + RandomNumber(100));

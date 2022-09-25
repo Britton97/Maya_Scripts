@@ -1,0 +1,177 @@
+proc string Add(float $give[])
+{
+    string $out = "";
+    float $answer = 0;
+    int $size = size($give);
+    //$out += $size;
+    print($out);
+    for( $i=0; $i < $size; ++$i )
+    {
+        $answer += $give[$i];
+        if($i + 1 == $size)
+        {
+            $out += $give[$i] + " =";
+        }
+        else
+        {
+            $out += $give[$i] + " + ";
+        }
+    }
+    return ($out + " " +$answer + "\r");
+}
+
+proc string Sub(float $give[])
+{
+    string $out = "";
+    float $answer = 0;
+    int $size = size($give);
+    print($out);
+    for( $i=0; $i < $size; ++$i )
+    {
+        $answer -= $give[$i];
+        if($i + 1 == $size)
+        {
+            $out += $give[$i] + " =";
+        }
+        else
+        {
+            $out += $give[$i] + " - ";
+        }
+    }
+    return ($out + " " +$answer + "\r");
+}
+
+proc string Mult(float $give[])
+{
+    string $out = "";
+    float $answer = $give[0];
+    $out += ($answer + " x ");
+    int $size = size($give);
+    for( $i=1; $i < $size; ++$i )
+    {
+        $answer *= $give[$i];
+        if($i + 1 == $size)
+        {
+            $out += $give[$i] + " =";
+        }
+        else
+        {
+            $out += $give[$i] + " x ";
+        }
+    }
+    return ($out + " " +$answer + "\r");
+}
+
+proc string Div(float $give[])
+{
+    string $out = "";
+    float $answer = $give[0];
+    $out += ($answer + " / ");
+    int $size = size($give);
+    for( $i=1; $i < $size; ++$i )
+    {
+        $answer /= $give[$i];
+        if($i + 1 == $size)
+        {
+            $out += $give[$i] + " =";
+        }
+        else
+        {
+            $out += $give[$i] + " / ";
+        }
+    }
+    return ($out + " " +$answer + "\r");
+}
+
+proc string Mean(float $give[])
+{
+    string $out = "";
+    float $answer = $give[0];
+    $out += ($answer + " , ");
+    int $size = size($give);
+    for( $i=1; $i < $size; ++$i )
+    {
+        $answer += $give[$i];
+        if($i + 1 == $size)
+        {
+            $out += $give[$i] + " =";
+        }
+        else
+        {
+            $out += $give[$i] + " , ";
+        }
+    }
+    return ($out + " " +($answer / $size) + "\r");
+}
+
+proc string Pow(float $give[])
+{
+    string $out = "";
+    float $answer = $give[0] * $give[1];
+
+    return ($give[0] + " to the power of " + $give[1] + " is " + $answer + "\r");
+}
+
+proc string Median(float $give[])
+{
+    float $answer;
+    float $sorted[] = `sort $give`;
+    int $size = size($give);
+    if(($size % 2) == 0)
+    {
+        int $first = ($size / 2) - 1;
+        int $second = $first + 1;
+        $answer = ($give[$first] + $give[$second]) / 2;
+    }
+    else
+    {
+        int $arrayPos = (int)$size / 2;
+        $answer = $give[$arrayPos];
+    }
+    return ("The median is " + $answer);
+}
+proc Calculator(float $input[] , int $operation)
+{
+    //float $input[] = {1,2,3,4};
+    int $size = size($input);
+    string $out;
+    if($operation == 1)
+    {
+        $out = Add($input);
+    }
+    else if($operation == 2)
+    {
+        $out = Sub($input);
+    }
+    else if($operation == 3)
+    {
+        $out = Mult($input);
+    }
+    else if($operation == 4)
+    {
+        $out = Div($input);
+    }
+    else if($operation == 5)
+    {
+        $out = Mean($input);
+    }
+    else if($operation == 6)
+    {
+        if($size == 2)
+        {
+            $out = Pow($input);
+        }
+        else
+        {
+            $out = "Array size must be of length two.";
+        }
+    }
+    else if($operation == 7)
+    {
+        $out = Median($input);
+    }
+
+    print($out);
+}
+
+Calculator({1,2,3,4},1);

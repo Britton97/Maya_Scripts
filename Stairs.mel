@@ -1,4 +1,4 @@
-proc CreateStairs(int $amountOfStairs, int $rotationStep, int $heightStep, int $depth, int $height, int $width, int $pipeRadius)
+proc CreateStairs(int $amountOfStairs, int $rotationStep, int $heightStep, int $depth, int $height, int $width, int $pipeRadius, float $outScale)
 {
     int $currentRotation = 0;
     int $currentHeight = 0;
@@ -6,7 +6,9 @@ proc CreateStairs(int $amountOfStairs, int $rotationStep, int $heightStep, int $
     {
         string $stair[] = `polyCube -d $depth -h $height -w $width`;
         xform -r -ro 0 $currentRotation 0 $stair[0];
-        move -r -os -wd ($pipeRadius * 2) $currentHeight 0 $stair[0];
+        move -r -os -wd ($pipeRadius) $currentHeight 0 $stair[0];
+        select $stair;    
+        scale -cs -os -r 1 $outScale 1 ($stair[0] + ".f[4]");
         $currentRotation += $rotationStep;
         $currentHeight += $heightStep;
     }
@@ -15,14 +17,4 @@ proc CreateStairs(int $amountOfStairs, int $rotationStep, int $heightStep, int $
     move -r 0 (($amountOfStairs * $heightStep) / 2) 0 $centerPipe[0];
 }
 
-proc Thing() // This was just an experiment and does not work. You can call it but its not working as intended
-{
-    string $name = "myself";
-    string $stair[] = `polyCube -n $name -d 2 -h .5 -w 5`;
-    xform -r -ro 0 45 0 $name;
-    move -r -os -wd 10 0 0 $name;
-    select -cl;
-    scale -cs -os -r 1 2 1 $name.f[4];
-}
-CreateStairs(24, 15, 1, 2, .5, 5, 2);
-
+CreateStairs(15, 24, 1, 2, .5, 5, 5, 1.75);
