@@ -1,119 +1,152 @@
-proc string Add(float $give[])
+global proc Add()
 {
+    string $numArrayRef = `optionVar -q "numberArray"`;
+    string $give[] = `textScrollList -q -ai $numArrayRef`;
+
     string $out = "";
     float $answer = 0;
-    int $size = size($give);
-    //$out += $size;
-    print($out);
+    int $size = `textScrollList -q -ni $numArrayRef`;
+    
     for( $i=0; $i < $size; ++$i )
     {
-        $answer += $give[$i];
+        $answer += (int)$give[$i];
         if($i + 1 == $size)
         {
-            $out += $give[$i] + " =";
+            $out += (int)$give[$i] + " =";
         }
         else
         {
-            $out += $give[$i] + " + ";
+            $out += (int)$give[$i] + " + ";
         }
     }
-    return ($out + " " +$answer + "\r");
+
+    string $result = ($out + " " +$answer + "\r");
+    string $resultField =`optionVar -q "ftResult"`;
+    textField -e -text $result $resultField;
 }
 
-proc string Sub(float $give[])
+global proc Sub()
 {
+    string $numArrayRef = `optionVar -q "numberArray"`;
+    string $give[] = `textScrollList -q -ai $numArrayRef`;
+
     string $out = "";
     float $answer = 0;
-    int $size = size($give);
-    print($out);
+    int $size = `textScrollList -q -ni $numArrayRef`;
+    
     for( $i=0; $i < $size; ++$i )
     {
-        $answer -= $give[$i];
+        $answer -= (int)$give[$i];
         if($i + 1 == $size)
         {
-            $out += $give[$i] + " =";
+            $out += (int)$give[$i] + " =";
         }
         else
         {
-            $out += $give[$i] + " - ";
+            $out += (int)$give[$i] + " - ";
         }
     }
-    return ($out + " " +$answer + "\r");
+    string $result = ($out + " " +$answer + "\r");
+    string $resultField =`optionVar -q "ftResult"`;
+    textField -e -text $result $resultField;
 }
 
-proc string Mult(float $give[])
+global proc Mult()
 {
+    string $numArrayRef = `optionVar -q "numberArray"`;
+    string $give[] = `textScrollList -q -ai $numArrayRef`;
+
     string $out = "";
-    float $answer = $give[0];
+    float $answer = (int)$give[0];
     $out += ($answer + " x ");
     int $size = size($give);
     for( $i=1; $i < $size; ++$i )
     {
-        $answer *= $give[$i];
+        $answer *= (int)$give[$i];
         if($i + 1 == $size)
         {
-            $out += $give[$i] + " =";
+            $out += (int)$give[$i] + " =";
         }
         else
         {
-            $out += $give[$i] + " x ";
+            $out += (int)$give[$i] + " x ";
         }
     }
-    return ($out + " " +$answer + "\r");
+    string $result = ($out + " " +$answer + "\r");
+    string $resultField =`optionVar -q "ftResult"`;
+    textField -e -text $result $resultField;
 }
 
-proc string Div(float $give[])
+global proc Div()
 {
+    string $numArrayRef = `optionVar -q "numberArray"`;
+    string $give[] = `textScrollList -q -ai $numArrayRef`;
+    
     string $out = "";
-    float $answer = $give[0];
+    float $answer = (int)$give[0];
     $out += ($answer + " / ");
     int $size = size($give);
     for( $i=1; $i < $size; ++$i )
     {
-        $answer /= $give[$i];
+        $answer /= (int)$give[$i];
         if($i + 1 == $size)
         {
-            $out += $give[$i] + " =";
+            $out += (int)$give[$i] + " =";
         }
         else
         {
-            $out += $give[$i] + " / ";
+            $out += (int)$give[$i] + " / ";
         }
     }
-    return ($out + " " +$answer + "\r");
+        
+    string $result = ($out + " " +$answer + "\r");
+    string $resultField =`optionVar -q "ftResult"`;
+    textField -e -text $result $resultField;
 }
 
-proc string Mean(float $give[])
+global proc Mean()
 {
+    string $numArrayRef = `optionVar -q "numberArray"`;
+    string $give[] = `textScrollList -q -ai $numArrayRef`;
+
     string $out = "";
-    float $answer = $give[0];
+    float $answer = (int)$give[0];
     $out += ($answer + " , ");
     int $size = size($give);
     for( $i=1; $i < $size; ++$i )
     {
-        $answer += $give[$i];
+        $answer += (int)$give[$i];
         if($i + 1 == $size)
         {
-            $out += $give[$i] + " =";
+            $out += (int)$give[$i] + " =";
         }
         else
         {
-            $out += $give[$i] + " , ";
+            $out += (int)$give[$i] + " , ";
         }
     }
-    return ($out + " " +($answer / $size) + "\r");
+    string $result = ($out + " " +($answer / $size) + "\r");
+    string $resultField =`optionVar -q "ftResult"`;
+    textField -e -text $result $resultField;
 }
 
-proc string Pow(float $give[])
+global proc Pow()
 {
+    string $numArrayRef = `optionVar -q "numberArray"`;
+    string $give[] = `textScrollList -q -ai $numArrayRef`;
     string $out = "";
-    float $answer = $give[0] * $give[1];
+    float $answer = (int)$give[0] * (int)$give[1];
 
-    return ($give[0] + " to the power of " + $give[1] + " is " + $answer + "\r");
+    string $result = ($give[0] + " to the power of " + $give[1] + " is " + $answer + "\r");
+    string $resultField =`optionVar -q "ftResult"`;
+    textField -e -text $result $resultField;
 }
 
-proc string Median(float $give[])
+global proc Median()
 {
+    string $numArrayRef = `optionVar -q "numberArray"`;
+    string $give[] = `textScrollList -q -ai $numArrayRef`;
+
     float $answer;
     float $sorted[] = `sort $give`;
     int $size = size($give);
@@ -121,57 +154,78 @@ proc string Median(float $give[])
     {
         int $first = ($size / 2) - 1;
         int $second = $first + 1;
-        $answer = ($give[$first] + $give[$second]) / 2;
+        $answer = ((int)$give[$first] + (int)$give[$second]) / 2;
     }
     else
     {
         int $arrayPos = (int)$size / 2;
-        $answer = $give[$arrayPos];
+        $answer = (int)$give[$arrayPos];
     }
-    return ("The median is " + $answer);
+
+    string $result = ("The median is " + $answer);
+    string $resultField =`optionVar -q "ftResult"`;
+    textField -e -text $result $resultField;
 }
-proc Calculator(float $input[] , int $operation)
+
+global proc AddNumberToList()
 {
-    //float $input[] = {1,2,3,4};
-    int $size = size($input);
-    string $out;
-    if($operation == 1)
-    {
-        $out = Add($input);
-    }
-    else if($operation == 2)
-    {
-        $out = Sub($input);
-    }
-    else if($operation == 3)
-    {
-        $out = Mult($input);
-    }
-    else if($operation == 4)
-    {
-        $out = Div($input);
-    }
-    else if($operation == 5)
-    {
-        $out = Mean($input);
-    }
-    else if($operation == 6)
-    {
-        if($size == 2)
-        {
-            $out = Pow($input);
-        }
-        else
-        {
-            $out = "Array size must be of length two.";
-        }
-    }
-    else if($operation == 7)
-    {
-        $out = Median($input);
-    }
+    //finds the field and gets a reference to the name -- INT FIELD
+    string $userChoice = `optionVar -q "userChoiceField"`;
+    //uses the previous variable to query the field by using its name and store it in the new variable
+    string $choiceValue = `intField -q -value $userChoice`;
 
-    print($out);
+    //test
+    string $numArrayRef = `optionVar -q "numberArray"`;
+    textScrollList -e -append $choiceValue $numArrayRef;
+    string $testCall[] = `textScrollList -q -ai $numArrayRef`;
+    //print((int)$testCall[0] + 2);
+    //test
 }
 
-Calculator({1,2,3,4},1);
+global proc RemoveNumberFromList()
+{
+    print("adfadfa");
+}
+
+global proc CalculatorUI()
+{
+    //this is the back end of the UI - This will make the "physical" window with buttons, what they are called,
+    //int fields, text fields, and optionVars to store them.
+    //Then call FT_ButtonCMD, (when you pres the "Go!" button)
+    //which will get data in the fields and send it to the Fortune Teller game in base data types like strings, int, floats
+    string $mWindow = "ftWindow";
+
+    if (`window -exists $mWindow`)
+    {
+        deleteUI $mWindow;
+    }
+
+    $mWindow = `window -title "Calculator...In the loosest of terms" 
+                       -widthHeight 800 400
+                       -resizeToFitChildren 1
+                       $mWindow`;
+    //Creating optionVar and telling its what data type and what the variable is called. 
+    //Then creating a int field who is a child of $mColumn
+    string $mColumn = `columnLayout -parent $mWindow -adjustableColumn 1`;
+
+    optionVar -stringValue "userChoiceField" `intField -parent $mColumn -editable 1`;
+    button -label "Add To List" -command "AddNumberToList";
+    button -label "Remove From List" -command "RemoveNumberFromList";
+    optionVar -stringValue "userQuestion" `textField -parent $mColumn -editable 0`;
+
+    //testing
+    optionVar -stringValue "numberArray" `textScrollList -numberOfRows 6 -allowMultiSelection false`;
+    //testing
+
+    rowColumnLayout -numberOfColumns 3
+        -columnWidth 1 100
+        -columnWidth 2 100
+        -columnWidth 3 100;
+        button -label "Add" -command "Add"; button -label "Subtract" -command "Sub"; button -label "Multiply" -command "Mult";
+        button -label "Divide" -command "Div"; button -label "Mean" -command "Mean"; button -label "Pow" -command "Pow";
+        button -label "Median" -command "Median";
+    optionVar -stringValue "ftResult" `textField -parent $mColumn -editable 0`;
+    showWindow $mWindow;
+}
+
+CalculatorUI();

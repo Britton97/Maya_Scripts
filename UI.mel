@@ -1,0 +1,42 @@
+/*
+window;
+columnLayout;
+button;
+button;
+intField;
+showWindow;
+*/
+
+/*
+window;
+columnLayout;
+button;
+button;
+intField;
+rowLayout -numberOfColumns 3;
+button;
+columnLayout;
+button;
+button;
+setParent "rowLayout";
+button;
+
+
+showWindow;
+*/
+
+string $mwindow = `window`;
+string $mColumn = `columnLayout`;
+button -p $mColumn;
+button -p $mColumn;
+intField -p $mColumn;
+rowLayout -numberOfColumns 3;
+button;
+columnLayout;
+button;
+button;
+setParent "rowLayout";
+button;
+
+
+showWindow;

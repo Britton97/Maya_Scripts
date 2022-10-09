@@ -1,0 +1,123 @@
+global proc string LotteryNumbers()
+{
+    int $values[];
+    for ($i=0; $i < 7; $i++)
+    {
+        int $num = `rand 100`;
+        $values[size($values)] = $num;
+    }
+
+    return (intArrayToString($values, " - "));
+}
+
+global proc string BestestFriend(string $name)
+{
+    string $names[] = {"Dave", "Doug", "Clarence", "Mary", "Jane", "Tina", "Phil"};
+    int $size = size($names);
+    int $randNum = `rand $size`;
+    return ($name + ", your new bestest friend will be named " + $names[$randNum] + ".");
+}
+
+global proc string FortuneCookie()
+{
+    string $fortunes[] = {"Geez whiz", "Oh goly", "Dang flabbit", "Oh shucks", "Dang tootin"};
+
+    int $randNum = `rand (size($fortunes))`;
+    return ($fortunes[$randNum]);
+}
+
+global proc string Zodiac(int $birthYear)
+{
+    string $signs[] = {"Rat", "Ox", "Tiger", "Rabbit", "Dragon", "Snake", "Horse", "Goat", "Monkey", "Rooster", "Dog", "Pig"};
+    int $index = ($birthYear - 4) % 12;
+    return $signs[$index];
+}
+
+global proc string FortuneTeller(string $myName, int $myBirthYear, int $operation)
+{
+    if($operation == 1)
+    {
+        return ("Your lucky numbers for today are: " + LotteryNumbers());
+    }
+    else if ($operation == 2)
+    {
+        return (BestestFriend($myName));
+    }
+    else if($operation == 3)
+    {
+        return (FortuneCookie());
+    }
+    else if ($operation == 4)
+    {
+        return ("Based on your birth year, " + $myBirthYear + ", your zodiac sign is " + Zodiac($myBirthYear) + ".");
+    }
+    else
+    {
+        print ("Please input a valid operation type as a value, 1 through 4.\r");
+    }
+}
+
+//FortuneTeller("Melissa", 1974, 1);
+
+global proc FT_ButtonCMD()
+{
+    //creates references to all the fields created below and put them in a string
+    string $nameField = `optionVar -q "ftNameField"`;
+    string $yearField = `optionVar -q "ftYearField"`;
+    string $operField = `optionVar -q "ftOperation"`;
+    string $resultField =`optionVar -q "ftResult"`;
+
+    //This queries the fields for what their data is 
+    //All values will be stored as a string regardless of what value they really are
+    //but somehow it still works when you give the function strings instead of ints
+    //I guess MEL just cast it on its own???
+    string $name = `textField -q -text $nameField`;
+    string $year = `intField -q -value $yearField`;
+    //returns number starting at 1 for the active button (first button will return 1)
+    string $oper = `radioButtonGrp -q -select $operField`;
+    //feed information to function that will return string that will be displayed on specified text field
+    string $result = FortuneTeller($name, $year, $oper);
+    textField -e -text $result $resultField;
+}
+
+global proc FortuneUI()
+{
+    //this is the back end of the UI - This will make the "physical" window with buttons, what they are called,
+    //int fields, text fields, and optionVars to store them.
+    //Then call FT_ButtonCMD, (when you pres the "Go!" button)
+    //which will get data in the fields and send it to the Fortune Teller game in base data types like strings, int, floats
+    string $mWindow = "ftWindow";
+
+    if (`window -exists $mWindow`)
+    {
+        deleteUI $mWindow;
+    }
+
+    $mWindow = `window -title "Fortune Teller" 
+                       -widthHeight 300 400
+                       -resizeToFitChildren 1
+                       $mWindow`;
+    string $mColumn = `columnLayout -parent $mWindow -adjustableColumn 1`;
+    //Creating optionVar and telling its what data type and what the variable is called. 
+    //Then creating a text field who is a child of $mColumn
+    optionVar -stringValue "ftNameField" `textField -parent $mColumn -placeholderText "Enter name here..."`;
+    optionVar -stringValue "ftYearField" `intField -parent $mColumn`;
+    //radio buttons are a array of buttons that only one can be active at time.
+    //...like a radio button or old fashion light switchs
+    //name of field is ftOperation and you name each button in the array ----------------------------------v
+    //in this case you say -labelArrary4 to indicate the size of the array
+    //Important to note that labelarrays store their buttons starting at 1 not 0.
+    optionVar -stringValue "ftOperation" `radioButtonGrp -parent $mColumn -numberOfRadioButtons 4 -labelArray4 "Lucky Numbers" "Best Friends" "Fortune Cookie" "Zodiac Sign"`;
+    button -label "Go!" -command "FT_ButtonCMD";
+    optionVar -stringValue "ftResult" `textField -parent $mColumn -editable 0`;
+
+    //Delete
+    columnLayout;
+    intFieldGrp -numberOfFields 3
+    -label "Scale" -extraLabel "cm"
+    -value1 3 -value2 5 -value3 1;
+    //Delete
+    showWindow $mWindow;
+}
+
+FortuneUI();
