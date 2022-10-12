@@ -1,0 +1,100 @@
+global proc RandomDup(int $xPos, int $yPos, int $zPos, int $sliderRange, int $amount)
+{
+    //first generate random position from parent function
+    //then iterate through each object in the selection
+    //duplicate each object
+    string $test[] = `ls -selection`;
+    group -n group1 $test;
+    $numInts = size($test);
+    //print($numInts);
+
+    for($i=0; $i<$amount; ++$i)
+    {
+        //float $num = rand(0,1);
+        //print($test[$i]);
+        select -cl;
+        select -r group1 ;
+        duplicate -rr;
+        float $x = rand(($xPos + ($sliderRange * -1)),($xPos + $sliderRange));
+        float $y = rand(($yPos + ($sliderRange * -1)),($yPos + $sliderRange));
+        float $z = rand(($zPos + ($sliderRange * -1)),($zPos + $sliderRange));
+        move $x $y $z;
+        float $randomSize = rand(.1,2);
+        scale -ws -r $randomSize $randomSize $randomSize ;
+    }
+
+    //float $XYZ[] = `objectCenter -l $test[0]`;
+    //print($XYZ);
+    //make group hidden
+}
+
+global proc GetInfoToPass()
+{
+    string $xPosRef = `optionVar -q "xPos"`;
+    int $xPos = `intField -q -value $xPosRef`;
+
+    string $yPosRef = `optionVar -q "yPos"`;
+    int $yPos = `intField -q -value $yPosRef`;
+
+    string $zPosRef = `optionVar -q "zPos"`;
+    int $zPos = `intField -q -value $zPosRef`;
+
+    string $sliderRef = `optionVar -q "User Range Slider"`;
+    int $sliderValue = `intSlider -q -value $sliderRef`;
+
+    string $amountRef = `optionVar -q "amount"`;
+    int $amount = `intField -q -value $amountRef`;
+    //print($xPos + " , " + $yPos + " , " + $zPos + "\rSlider Value = " + $sliderValue + "\rAmount = " + $amount);
+    RandomDup($xPos, $yPos, $zPos, $sliderValue, $amount);
+}
+
+global proc CalculatorUI()
+{
+    //this is the back end of the UI - This will make the "physical" window with buttons, what they are called,
+    //int fields, text fields, and optionVars to store them.
+    //Then call FT_ButtonCMD, (when you pres the "Go!" button)
+    //which will get data in the fields and send it to the Fortune Teller game in base data types like strings, int, floats
+    string $mWindow = "ftWindow";
+
+    if (`window -exists $mWindow`)
+    {
+        deleteUI $mWindow;
+    }
+
+    $mWindow = `window -title "Random Placement" 
+                       -widthHeight 400 400
+                       -resizeToFitChildren 0
+                       $mWindow`;
+    //Creating optionVar and telling its what data type and what the variable is called. 
+    //Then creating a int field who is a child of $mColumn
+    string $mColumn = `columnLayout -parent $mWindow -adjustableColumn 1`;
+
+    optionVar -stringValue "User Instruction" `textField -parent $mColumn -editable 0`;
+    string $instructions = "Enter Center Point (x,y,z)";
+    string $instructionsField =`optionVar -q "User Instruction"`;
+    textField -e -text $instructions $instructionsField;
+
+    string $mRow = `rowLayout -parent $mWindow -numberOfColumns 3`;
+    optionVar -stringValue "xPos" `intField -parent $mRow -editable 1`;
+    optionVar -stringValue "yPos" `intField -parent $mRow -editable 1`;
+    optionVar -stringValue "zPos" `intField -parent $mRow -editable 1`;
+
+    optionVar -stringValue "User Range" `textField -parent $mColumn -editable 0`;
+    string $userRange = "Range from center point to disperse from\rValue between 10-50";
+    string $userRangeField =`optionVar -q "User Range"`;
+    textField -e -text $userRange $userRangeField;
+
+    optionVar -stringValue "User Range Slider" `intSlider -parent $mColumn -min 10 -max 50 -step 1`;
+    button -parent $mColumn -label "Go!" -command "GetInfoToPass";
+
+    optionVar -stringValue "User Amount" `textField -parent $mColumn -editable 0`;
+    string $userAmount = "Duplicate Amount (Enter Positive Integer)";
+    string $userAmountField =`optionVar -q "User Amount"`;
+    textField -e -text $userAmount $userAmountField;
+
+    optionVar -stringValue "amount" `intField -parent $mColumn -editable 1`;
+
+    showWindow $mWindow;
+}
+//TestSelect();
+CalculatorUI();
