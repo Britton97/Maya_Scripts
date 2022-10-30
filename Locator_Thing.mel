@@ -1,0 +1,27 @@
+global proc Thing()
+{
+    string $verts[] = `ls -sl -flatten`;
+    //print($other); 
+    float $xPos = 0;
+    float $yPos = 0;
+    float $zPos = 0;
+    int $vertSize = `size($verts)`;
+
+    for ($vert in $verts)
+    {
+        float $vertPos[] = `xform -q -ws -translation $vert`;
+        //print($vertPos);
+        $xPos += $vertPos[0];
+        $yPos += $vertPos[1];
+        $zPos += $vertPos[2];
+    }
+    
+    $xPos = $xPos / $vertSize;
+    $yPos = $yPos / $vertSize;
+    $zPos = $zPos / $vertSize;
+    print($xPos +" " + $yPos + " " + $zPos);
+    spaceLocator;
+    move -r $xPos $yPos $zPos;
+}
+
+Thing();
