@@ -1,20 +1,30 @@
 import maya.cmds as cmds
 
-txt = "Leg_##_Jnt_####"
+def OrderNamesMaya(passIn):
+    objects = cmds.ls(sl=True)
+    counter = 1
+    for obj in objects:
+        print(obj)
+        cmds.rename(obj, Start(passIn, counter))
+        counter = counter + 1
 
-count = txt.count("#")
-if count > 0:
-    x = txt.find("#" * count)
 
-#remember .partition on the string
 
-txt = "Leg_####_Jnt"
-x = txt.partition("####")
-print(x)
+def Start(passIn, counter):
+    digits = CutWord(passIn, 1).count('#')
+    cutUp = passIn.partition('#' * digits)
+    replacement = str(counter).zfill(digits)
+    newName = cutUp[0] + replacement + cutUp[2]
+    return newName
 
-#asdfasdf
 
-txt = "50"
+def CutWord(word, returnSpot):
+    x = word.count("#")
+    y = '#' * x
+    cutWord = word.partition(y)
+    return cutWord[returnSpot]
 
-x = txt.zfill(10)
-print(x)
+
+#c = ["Leg_###_Jnt", "Leg_###_Jnt", "Leg_###_Jnt", "Arm_###_Jnt", "Arm_###_Jnt", "Arm_###_Jnt"]
+#OrderNames(c)
+OrderNamesMaya("Leg_####_Jnt")
